@@ -1,0 +1,33 @@
+plugins {
+    alias(libs.plugins.spring.boot)
+}
+dependencies {
+    implementation libs.spring.boot.starter.web
+}
+
+// only if the project is Spring Boot Application (Executable on Tomcat Server = fatjar)
+bootJar {
+    archiveBaseName.set(project.name)
+}
+
+
+// for libs
+// jar { enabled = true }
+
+
+/*
+only for Spring boot applications
+this generates: META-INF/build-info.properties which is used by /actuator/info api
+*/
+
+springBoot {
+    buildInfo()
+}
+
+/*
+only for Spring boot applications
+this generates: Docker image using Buildpacks
+*/
+bootBuildImage {
+    imageName = "devravinder/project-retail-flow-${project.name}:${project.version}"
+}

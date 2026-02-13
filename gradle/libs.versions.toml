@@ -1,0 +1,36 @@
+[versions]
+spring-boot = "4.0.2"
+dependency-management = "1.1.7"
+spotless = "8.2.1"
+git-properties = "2.5.7"
+ben-manes = "0.53.0"
+postgresql = "42.7.10"
+mapstruct = "1.6.3"
+
+
+
+[plugins]
+spring-boot= { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management= { id = "io.spring.dependency-management", version.ref = "dependency-management" }
+spotless= { id = "com.diffplug.spotless", version.ref = "spotless" }
+git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "git-properties"}
+ben-manes = { id = "com.github.ben-manes.versions", version.ref = "ben-manes" }
+
+[libraries]
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+
+
+# Database
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+# Utilities
+lombok = { module = "org.projectlombok:lombok" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+
+
