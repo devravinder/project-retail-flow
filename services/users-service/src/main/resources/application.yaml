@@ -19,7 +19,8 @@ spring:
 
   # ref: https://contribute.liquibase.com/extensions-integrations/directory/integration-docs/springboot/configuration/
   liquibase:
-    change-log: classpath:/db/migrations/changelog-master.yaml
+    enabled: true
+    changelog-file: classpath:/db/changelog/changelog-master.yaml
   #   rollback-file: rollback.sql
 
 logging:
