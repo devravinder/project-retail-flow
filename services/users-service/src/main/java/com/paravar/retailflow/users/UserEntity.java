@@ -2,7 +2,6 @@ package com.paravar.retailflow.users;
 
 import com.paravar.retailflow.models.Address;
 import com.paravar.retailflow.models.Role;
-import com.paravar.retailflow.util.CryptoConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +22,7 @@ public class UserEntity {
     @Column(name = "id", length = 36)
     private String id;           // UUID as string
 
-    @Convert(converter = CryptoConverter.class)
+//    @Convert(converter = CryptoConverter.class)
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
@@ -36,7 +35,7 @@ public class UserEntity {
     @Column(length = 100)
     private String lastName;
 
-    @Convert(converter = CryptoConverter.class)
+//    @Convert(converter = CryptoConverter.class)
     @Column(length = 20)
     private String phone;
 

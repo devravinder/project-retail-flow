@@ -10,12 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CryptoConverter implements AttributeConverter<String, String> {
 
     // @RequiredArgsConstructor won't work -> JPA uses reflection to create object ( this is not spring bean )
-    private AesGcmEncryptionUtil encryptor;// = SpringContextHolder.getBean(AesGcmEncryptionUtil.class);;
+    private final AesGcmEncryptionUtil encryptor = SpringContextHolder.getBean(AesGcmEncryptionUtil.class);
 
-    @Autowired
-    public void setEncryptor(AesGcmEncryptionUtil encryptor) {
-        this.encryptor = encryptor;
-    }
     @Override
     public String convertToDatabaseColumn(String attribute) {
         return encryptor.encrypt(attribute);

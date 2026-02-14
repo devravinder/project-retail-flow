@@ -1,5 +1,6 @@
 [versions]
-spring-boot = "4.0.2"
+#spring-boot = "4.0.2"
+spring-boot = "3.5.10"
 dependency-management = "1.1.7"
 spotless = "8.2.1"
 git-properties = "2.5.7"

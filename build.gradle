@@ -11,7 +11,7 @@ plugins {
 // extra properties
 ext {
     defaultEncoding = 'UTF-8'
-    javaVersion = JavaVersion.VERSION_25.toString()
+    javaVersion = JavaVersion.VERSION_21.toString()
 }
 
 allprojects {

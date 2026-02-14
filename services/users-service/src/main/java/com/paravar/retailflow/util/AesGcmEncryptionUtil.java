@@ -29,7 +29,7 @@ public class AesGcmEncryptionUtil {
     private void init() {
         byte[] bytes = Base64.getDecoder().decode(base64Key);
 
-        IO.println("base64Key-----------------------------"+base64Key);
+        System.out.println("base64Key-----------------------------"+base64Key);
 
         if (bytes.length <= 8) {
             throw new IllegalArgumentException("Key must be 32 bits (8 bytes)");

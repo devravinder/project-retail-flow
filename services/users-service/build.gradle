@@ -28,6 +28,10 @@ springBoot {
     buildInfo()
 }
 
+bootRun {
+    systemProperty 'spring.liquibase.enabled', 'true'
+}
+
 bootBuildImage {
     imageName = "devravinder/project-retail-flow-${project.name}:${project.version}"
 }

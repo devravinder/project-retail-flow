@@ -1,5 +1,6 @@
 package com.paravar.retailflow.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paravar.retailflow.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +20,7 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private UserEntity user;
 
     @Column(nullable = false, length = 100)

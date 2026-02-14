@@ -26,7 +26,8 @@ databaseChangeLog:
                   valueBoolean: true
               - column:
                   name: created_at
-                  valueDate: "2026-02-13T12:00:00Z"
+#                  valueDate: "2026-02-13T12:00:00Z"
+                  valueComputed: "'2026-02-13 12:00:00+05:30'::timestamptz"
         - insert:
             tableName: user_roles
             columns:
