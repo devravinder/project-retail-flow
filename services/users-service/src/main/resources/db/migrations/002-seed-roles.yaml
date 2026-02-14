@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026-02-13-roles-seed
+      author: ravinder
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: "role-user-01"
+              - column:
+                  name: name
+                  value: "RETAIL_CUSTOMER"
+              - column:
+                  name: description
+                  value: "Regular customer"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: "role-user-02"
+              - column:
+                  name: name
+                  value: "WHOLESALE_CUSTOMER"
+              - column:
+                  name: description
+                  value: "wholesale customer"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: "role-admin-01"
+              - column:
+                  name: name
+                  value: "ADMIN"
+              - column:
+                  name: description
+                  value: "System administrator"
+
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: "role-admin-02"
+              - column:
+                  name: name
+                  value: "SUPER_ADMIN"
+              - column:
+                  name: description
+                  value: "The project admin"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: "role-seller-01"
+              - column:
+                  name: name
+                  value: "STORE_MANAGER"
+              - column:
+                  name: description
+                  value: "Seller / Vendor / Manager"

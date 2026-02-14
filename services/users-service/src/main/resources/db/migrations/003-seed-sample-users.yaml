@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026-02-13-seed-users
+      author: ravinder
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: "user-0001-test"
+              - column:
+                  name: email
+                  value: "test.user@example.com"
+              - column:
+                  name: password_hash
+                  value: "{bcrypt}$2a$10$..."
+              - column:
+                  name: first_name
+                  value: "Test"
+              - column:
+                  name: last_name
+                  value: "User"
+              - column:
+                  name: active
+                  valueBoolean: true
+              - column:
+                  name: created_at
+                  valueDate: "2026-02-13T12:00:00Z"
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: "user-0001-test"
+              - column:
+                  name: role_id
+                  value: "role-user-01"

@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026-02-13-seed-addresses
+      author: ravinder
+      changes:
+        - insert:
+            tableName: addresses
+            columns:
+              - column:
+                  name: id
+                  value: "addr-home-001"
+              - column:
+                  name: user_id
+                  value: "user-0001-test"
+              - column:
+                  name: name
+                  value: "Home"
+              - column:
+                  name: line1
+                  value: "123 MG Road"
+              - column:
+                  name: city
+                  value: "Bengaluru"
+              - column:
+                  name: state
+                  value: "Karnataka"
+              - column:
+                  name: postal_code
+                  value: "560001"
+              - column:
+                  name: country
+                  value: "India"
+              - column:
+                  name: is_default
+                  valueBoolean: true

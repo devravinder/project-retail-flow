@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001-create-tables.yaml
+  - include:
+      file: db/migrations/002-seed-roles.yaml
+  - include:
+      file: db/migrations/003-seed-sample-users.yaml
+  - include:
+      file: db/migrations/004-seed-sample-addresses.yaml
