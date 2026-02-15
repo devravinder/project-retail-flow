@@ -38,12 +38,12 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
-                    unique: true
               - column:
-                  name: password_hash
+                  name: email_hash
                   type: varchar(255)
                   constraints:
                     nullable: false
+                    unique: true
               - column:
                   name: first_name
                   type: varchar(100)
@@ -54,7 +54,11 @@ databaseChangeLog:
                   type: varchar(100)
               - column:
                   name: phone
-                  type: varchar(20)
+                  type: varchar(255)
+
+              - column:
+                  name: phone_hash
+                  type: varchar(255)
               - column:
                   name: active
                   type: boolean

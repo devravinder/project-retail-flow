@@ -4,10 +4,11 @@ plugins {
 dependencies {
 
     implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.security
+    testImplementation libs.spring.boot.starter.security.test
 
 
     // util
-    implementation libs.mapstruct
     implementation libs.spring.boot.starter.validation
 
     // db
@@ -26,10 +27,6 @@ bootJar {
 
 springBoot {
     buildInfo()
-}
-
-bootRun {
-    systemProperty 'spring.liquibase.enabled', 'true'
 }
 
 bootBuildImage {

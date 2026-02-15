@@ -6,8 +6,9 @@ spotless = "8.2.1"
 git-properties = "2.5.7"
 ben-manes = "0.53.0"
 postgresql = "42.7.10"
-mapstruct = "1.6.3"
+mapstruct = "1.6.1"
 liquibase = "5.0.1"
+lombok-mapstruct-binding = "0.2.0"
 
 
 [plugins]
@@ -24,6 +25,8 @@ spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-star
 spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-boot-starter-security-test = { module = "org.springframework.security:spring-security-test" }
 
 
 # Database
@@ -34,5 +37,7 @@ liquibase = { module = "org.liquibase:liquibase-core", version.ref="liquibase" }
 lombok = { module = "org.projectlombok:lombok" }
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
+lombok-mapstruct-binding = {module = "org.projectlombok:lombok-mapstruct-binding", version.ref="lombok-mapstruct-binding" }
 
 

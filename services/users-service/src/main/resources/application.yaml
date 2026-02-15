@@ -1,12 +1,23 @@
 server:
-  port: ${SERVER_PORT:8082}
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
 
 users-service:
-  default-password: ${DEFAULT_PASSWORD:Itest@123}
-  encryption-key: ${ENCRYPT_KEY:d2hzLWhleS1rcmlzaG5hLXJhbWEtcmFtYS1yYW1h} # base64 key
+      # bcrypt hashed password: $2a$10$tSepBpJKxkvJnkNR45miqO/c55NLFw49YWx9Z6jqZzHkxwbvkMI3i
+  encryption-key: ${ENCRYPT_KEY:gd3jMu1Asdr/9mrQ+Pdvgo1K9tO10n7hu6StlRpDd94=} # base64 key
+  hashSecret: ${HASH_SECRET:9s4gZDGFUESlt7+96NEyDasV22OQFSoD9H32f2bS7fo=} # base64 recommended
 
 spring:
+
   application.name: users-service
+  main:
+    banner-mode: off
+  autoconfigure:
+      exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  profiles:
+    active: local
+
 
   ############################### Database ############################
   datasource:
@@ -14,6 +25,12 @@ spring:
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        type:
+          contributors: org.springframework.data.jpa.repository.config.BeanContainerBeanFactoryAdvisingBeanPostProcessor
 
   #  jpa.show-sql: true
 

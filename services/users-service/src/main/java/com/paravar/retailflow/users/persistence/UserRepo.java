@@ -1,4 +1,4 @@
-package com.paravar.retailflow.users;
+package com.paravar.retailflow.users.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

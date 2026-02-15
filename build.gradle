@@ -51,25 +51,16 @@ subprojects {Project sub->
 
     }
 
-        tasks.withType(JavaCompile).configureEach {
-            options.encoding = defaultEncoding
-
-            // pass mapstruct compile args conditionally
-            if (configurations.annotationProcessor.dependencies.any { it.name == "mapstruct" }) {
-                options.compilerArgs += [
-                        '-Amapstruct.suppressGeneratorTimestamp=true',
-                        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-                        '-Amapstruct.defaultComponentModel=spring'
-                ]
-            }
-        }
-
     dependencies {
         compileOnly libs.lombok
         annotationProcessor libs.lombok
 
+        testCompileOnly libs.lombok
+        testAnnotationProcessor libs.lombok
+
         implementation libs.mapstruct
-        annotationProcessor libs.mapstruct
+        annotationProcessor libs.mapstruct.processor
+        annotationProcessor libs.lombok.mapstruct.binding
 
         compileOnly libs.spring.boot.configuration.processor
         annotationProcessor libs.spring.boot.configuration.processor
@@ -119,5 +110,3 @@ tasks.register('spotlessApplyAll') {
 tasks.register('spotlessCheckAll') {
     dependsOn subprojects.findResults { it.tasks.findByName('spotlessCheck') }
 }
-
-// refer: product-catalog-service for project level build config

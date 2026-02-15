@@ -7,6 +7,6 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @ConfigurationProperties(prefix = "users-service")
 public record ApplicationProperties(
-        @NotNull String defaultPassword,
-        @NotNull String encryptionKey
+        @NotNull String encryptionKey,
+        @NotNull String hashSecret
 ) {}

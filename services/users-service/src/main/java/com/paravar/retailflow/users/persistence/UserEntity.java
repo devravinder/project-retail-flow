@@ -1,7 +1,6 @@
-package com.paravar.retailflow.users;
+package com.paravar.retailflow.users.persistence;
 
-import com.paravar.retailflow.models.Address;
-import com.paravar.retailflow.models.Role;
+import com.paravar.retailflow.util.CryptoConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,18 +15,19 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserEntity {
 
     @Id
     @Column(name = "id", length = 36)
     private String id;           // UUID as string
 
-//    @Convert(converter = CryptoConverter.class)
-    @Column(nullable = false, unique = true, length = 255)
+    @Convert(converter = CryptoConverter.class)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password_hash", nullable = false, length = 255)
-    private String passwordHash;
+    @Column(name = "email_hash", nullable = false)
+    private String emailHash;
 
     @Column(nullable = false, length = 100)
     private String firstName;
@@ -35,9 +35,12 @@ public class UserEntity {
     @Column(length = 100)
     private String lastName;
 
-//    @Convert(converter = CryptoConverter.class)
-    @Column(length = 20)
+    @Convert(converter = CryptoConverter.class)
+    @Column()
     private String phone;
+
+    @Column(name = "phone_hash", nullable = false)
+    private String phoneHash;
 
     @Column(nullable = false)
     private Boolean active = true;
@@ -55,11 +58,11 @@ public class UserEntity {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @Builder.Default
-    private Set<Role> roles = new HashSet<>();
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<Address> addresses = new HashSet<>();
+    private Set<AddressEntity> addresses = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

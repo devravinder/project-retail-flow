@@ -1,7 +1,6 @@
-package com.paravar.retailflow.models;
+package com.paravar.retailflow.users.persistence;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.paravar.retailflow.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class AddressEntity {
 
     @Id
     @Column(name = "id", length = 36)

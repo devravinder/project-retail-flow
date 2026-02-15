@@ -11,10 +11,20 @@ databaseChangeLog:
                   value: "user-0001-test"
               - column:
                   name: email
-                  value: "test.user@example.com"
+                  value: "Xn4yKLtpvXfMtU+NSbtzHpyCrmGVf2h4ZvX3ZRwxBKWOjcLOlzD0fIFGyhOf29M4UQ=="
+                        # "test.user@example.com"
               - column:
-                  name: password_hash
-                  value: "{bcrypt}$2a$10$..."
+                  name: email_hash
+                  value: "23e3465cc251d95f6139ba8204091ee49a0b05a8950ee2854f82c285047d9a2f"
+
+              - column:
+                  name: phone
+                  value: "7GAiwOsgo7jQmwDNI2gR+ukcN+N3bSxngXbR5b2AfF84TeqASq5QTVQF3w=="
+                  # "(+91)9876543210"
+              - column:
+                  name: phone_hash
+                  value: "c6ece5fc39082c809dd58edae57c3c4c7f8b92182497296f113b5f6bc81cdc5d"
+
               - column:
                   name: first_name
                   value: "Test"

@@ -1,16 +1,15 @@
 package com.paravar.retailflow.util;
 
-import com.paravar.retailflow.config.SpringContextHolder;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
 
-@Converter(autoApply = false)  // ← important: apply only where needed
+@RequiredArgsConstructor
+@Converter(autoApply = false)  // ← important: apply only where needed else all fields
 public class CryptoConverter implements AttributeConverter<String, String> {
 
-    // @RequiredArgsConstructor won't work -> JPA uses reflection to create object ( this is not spring bean )
-    private final AesGcmEncryptionUtil encryptor = SpringContextHolder.getBean(AesGcmEncryptionUtil.class);
+    private final AesGcmEncryptionUtil encryptor;
 
     @Override
     public String convertToDatabaseColumn(String attribute) {

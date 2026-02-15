@@ -3,7 +3,6 @@ package com.paravar.retailflow.util;
 import com.paravar.retailflow.ApplicationProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -15,6 +14,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @Component
+@RequiredArgsConstructor
 public class AesGcmEncryptionUtil {
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
@@ -22,15 +22,11 @@ public class AesGcmEncryptionUtil {
     private static final int GCM_TAG_LENGTH = 128;         // bits
     private SecretKey key;
 
-    @Value("${users-service.encryption-key}")
-    private String base64Key;   // ← final + @Value
+    private final ApplicationProperties applicationProperties;
 
     @PostConstruct
     private void init() {
-        byte[] bytes = Base64.getDecoder().decode(base64Key);
-
-        System.out.println("base64Key-----------------------------"+base64Key);
-
+        byte[] bytes = Base64.getDecoder().decode(applicationProperties.encryptionKey());
         if (bytes.length <= 8) {
             throw new IllegalArgumentException("Key must be 32 bits (8 bytes)");
         }
@@ -40,12 +36,14 @@ public class AesGcmEncryptionUtil {
     public String encrypt(String plaintext) {
         if (plaintext == null) return null;
         try {
+            String normalized = plaintext.trim().toLowerCase();
+
             byte[] iv = generateIv();
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             GCMParameterSpec spec = new GCMParameterSpec(GCM_TAG_LENGTH, iv);
             cipher.init(Cipher.ENCRYPT_MODE, key, spec);
 
-            byte[] cipherText = cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));
+            byte[] cipherText = cipher.doFinal(normalized.getBytes(StandardCharsets.UTF_8));
 
             byte[] combined = new byte[iv.length + cipherText.length];
             System.arraycopy(iv, 0, combined, 0, iv.length);

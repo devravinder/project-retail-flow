@@ -114,7 +114,7 @@
 #### 0266 | Users Service
 
 - Id: 0266
-- lastModifiedDate: 2026-02-13 07:41:36:426
+- lastModifiedDate: 2026-02-15 01:29:44:546
 - Title: Users Service
 - Status: 📝 To Do
 - Priority: 🟢 Low
@@ -127,9 +127,9 @@
 
 ##### Subtasks
 
-- [ ] postgres + jpa
+- [x] postgres + jpa
 - [ ] encrypt secure fields
-- [ ] db migrations
+- [x] db migrations
 
 ---
 To view this file in Kanban dashboard open this file(file parent folder) with [Task Manager](https://todo.paravartech.com/)
