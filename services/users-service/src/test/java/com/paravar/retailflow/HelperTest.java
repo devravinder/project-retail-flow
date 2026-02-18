@@ -16,7 +16,6 @@ import java.util.Base64;
 class HelperTest {
 
     private final AesGcmEncryptionUtil encryptor;
-    private final ApplicationProperties properties;
     private final HashingUtil hashUtil;
 //    private  final Environment environment;
 
