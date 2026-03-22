@@ -11,15 +11,15 @@ databaseChangeLog:
                   value: "user-0001-test"
               - column:
                   name: email
-                  value: "Xn4yKLtpvXfMtU+NSbtzHpyCrmGVf2h4ZvX3ZRwxBKWOjcLOlzD0fIFGyhOf29M4UQ=="
-                        # "test.user@example.com"
+                  value: "fVZmOSQoaLDwb1qNqtfUaBuaH9HNGaWdt+DRcfKRfDMmIakjXCmDAg6g8r3MvvUUBpgsJiNL"
+                        # "super.admin@retailflow.com"
               - column:
                   name: email_hash
-                  value: "23e3465cc251d95f6139ba8204091ee49a0b05a8950ee2854f82c285047d9a2f"
+                  value: "fad9bb3fb964a8477408d8d81517eec0b1f42483f6a661a5628f49b0814a5825"
 
               - column:
                   name: phone
-                  value: "7GAiwOsgo7jQmwDNI2gR+ukcN+N3bSxngXbR5b2AfF84TeqASq5QTVQF3w=="
+                  value: "ojzrB294Y5oea2UMCSUZSH/1Bw2AHEkxVb+cR7FGz+OPPZAc/5UKzbotQw=="
                   # "(+91)9876543210"
               - column:
                   name: phone_hash
@@ -27,10 +27,10 @@ databaseChangeLog:
 
               - column:
                   name: first_name
-                  value: "Test"
+                  value: "Super"
               - column:
                   name: last_name
-                  value: "User"
+                  value: "Admin"
               - column:
                   name: active
                   valueBoolean: true
@@ -46,4 +46,4 @@ databaseChangeLog:
                   value: "user-0001-test"
               - column:
                   name: role_id
-                  value: "role-user-01"
+                  value: "role-admin-02"

@@ -23,3 +23,25 @@
      ```bash
         docker compose -f ../deployment/infra.yaml up -d
      ```
+   - or from root folder
+   ```bash
+      docker compose -f deployment/infra.yaml up -d
+   ```
+   
+## SSL/TLS Setup - One time
+
+- generate ssl files ( produces inside `certs/` )
+  ```bash
+   bash certs/generate-certs.sh localhost
+  ```
+
+- Files & purpose
+   - `ca.key` / `ca.crt` :  Your local root CA 
+   - `tls.key` / `tls.crt` : Server cert signed by your CA 
+   - `keycloak.p12` : PKCS12 bundle (if Keycloak needs it directly) 
+  
+- Trust the CA in your browser** (one-time
+    - macOS: `sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ca.crt`
+    - Ubuntu/Debian: `sudo cp ca.crt /usr/local/share/ca-certificates/myorg-ca.crt && sudo update-ca-certificates`
+    - Windows: `certutil -addstore -f "ROOT" ca.crt`
+    - Chrome/Firefox on Linux: Import `ca.crt` in Settings → Certificates → Authorities

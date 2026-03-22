@@ -1,0 +1,173 @@
+{
+  "realm": "retail-flow",
+  "enabled": true,
+  "displayName": "Retail Flow",
+  "displayNameHtml": "<b>Retail Flow</b>",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 10,
+  "defaultSignatureAlgorithm": "RS256",
+  "accessTokenLifespan": 300,
+  "accessTokenLifespanForImplicitFlow": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "offlineSessionIdleTimeout": 2592000,
+  "accessCodeLifespan": 60,
+  "accessCodeLifespanUserAction": 300,
+  "accessCodeLifespanLogin": 1800,
+  "roles": {
+    "realm": [
+      {
+        "name": "RETAIL_CUSTOMER",
+        "description": "Regular customer"
+      },
+      {
+        "name": "WHOLESALE_CUSTOMER",
+        "description": "Wholesale customer"
+      },
+      {
+        "name": "ADMIN",
+        "description": "System administrator"
+      },
+      {
+        "name": "SUPER_ADMIN",
+        "description": "The project admin"
+      },
+      {
+        "name": "STORE_MANAGER",
+        "description": "Seller / Vendor / Manager"
+      }
+    ],
+    "client": {
+      "backend-service": [
+        {
+          "name": "read",
+          "description": "Read access"
+        },
+        {
+          "name": "write",
+          "description": "Write access"
+        }
+      ]
+    }
+  },
+  "clients": [
+    {
+      "clientId": "backend-service",
+      "name": "Backend Service",
+      "description": "Spring Boot / Node.js backend — confidential client (client_credentials)",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "backend-super-secret-change-in-prod",
+      "bearerOnly": false,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "redirectUris": [],
+      "webOrigins": [],
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "300",
+        "use.refresh.tokens": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "audience-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "backend-service",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "frontend-app",
+      "name": "Frontend SPA",
+      "description": "React / Angular / Vue SPA — public client (PKCE)",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "publicClient": true,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "http://localhost:5173/*",
+        "http://localhost:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:4200"
+      ],
+      "protocol": "openid-connect",
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "access.token.lifespan": "300",
+        "post.logout.redirect.uris": "http://localhost:3000##http://localhost:5173"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "super-admin",
+      "email": "super.admin@retailflow.com",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Itest@re2",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["SUPER_ADMIN"]
+    }
+
+  ],
+  "scopeMappings": [
+    {
+      "client": "frontend-app",
+      "roles": ["RETAIL_CUSTOMER", "WHOLESALE_CUSTOMER", "STORE_MANAGER"]
+    }
+  ],
+  "smtpServer": {}
+}

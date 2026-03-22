@@ -1,14 +1,16 @@
 name: 'retail-flow'
 services:
-  users-service-postgres:
+  retail-flow-postgres:
     image: postgres:18.2-alpine
-    container_name: users-service-postgres
+    container_name: retail-flow-postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+#      - POSTGRES_DB=postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ./docker-compose/postgres/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql:ro
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 30s
@@ -19,3 +21,65 @@ services:
         limits:
           memory: 500m
 
+
+  retail-flow-keycloak:
+    image: quay.io/keycloak/keycloak:26.5.6
+    container_name: retail-flow-keycloak
+#    restart: unless-stopped
+
+    ports:
+      - "8080:8080"     # http
+      - "8443:8443"   # https – uncomment later when you add TLS
+
+    command:
+      # 'start' = production mode (no --dev flag)
+      # --optimized skips build phase (fast); remove if adding providers
+      - start
+#      - --optimized
+      - --import-realm
+
+    environment:
+      # ── Database ─────────────────────────────────────────
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://retail-flow-postgres:5432/postgres?currentSchema=auth_schema
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+      KC_DB_SCHEMA: auth_schema
+
+      # ── Admin credentials ─────────────────────────────────
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: Itest@ke2
+
+      # ── Hostname / proxy ──────────────────────────────────
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_STRICT: "false"          # allow localhost & 127.0.0.1
+      KC_HOSTNAME_STRICT_HTTPS: "false"          # nginx handles TLS
+      KC_PROXY: edge             # trust X-Forwarded-Proto from nginx
+      KC_HTTP_ENABLED: "true"           # nginx <-> keycloak is plain HTTP
+      KC_HTTP_PORT: 8080
+      KC_HTTPS_PORT: 8443
+
+      # ── Logging ───────────────────────────────────────────
+      KC_LOG_LEVEL: INFO
+      KC_LOG_CONSOLE_OUTPUT: json             # structured logs, easy to ship
+
+      # ── Features ─────────────────────────────────────────
+      KC_FEATURES: token-exchange,admin-fine-grained-authz
+
+      # ── Metrics / Health (Prometheus-ready) ───────────────
+      KC_METRICS_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+
+    volumes:
+      # Realm JSON auto-imported on first boot
+      - ./docker-compose/keycloak:/opt/keycloak/data/import:ro
+    depends_on:
+      retail-flow-postgres:
+        condition: service_healthy
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/health/ready" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s

@@ -3,6 +3,7 @@ package com.paravar.retailflow;
 import com.paravar.retailflow.util.AesGcmEncryptionUtil;
 import com.paravar.retailflow.util.HashingUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @SpringBootTest
+@Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class HelperTest {
 
@@ -30,6 +32,24 @@ class HelperTest {
             expression = "#{environment.acceptsProfiles('local')}",
             loadContext = true
     )
+
+    void generateEmailAndPhone(String username, String email, String phone){
+        log.info("===========username : {}=======================", username);
+
+        String encryptedEmail = encryptor.encrypt(email);
+        String hashedEmail = hashUtil.blindIndex(email);
+        log.info("email:{}, encryptedEmail:{}, hashedEmail:{}",email, encryptedEmail, hashedEmail);
+
+
+        String encryptedPhone = encryptor.encrypt(phone);
+        String hashedPhone = hashUtil.blindIndex(phone);
+        log.info("phone:{}, encryptedPhone:{}, hashedPhone:{}",phone, encryptedPhone, hashedPhone);
+
+        log.info("===========================================");
+
+
+    }
+
     void generateKeys(){
 
         /*
@@ -56,18 +76,12 @@ class HelperTest {
     )
     void generateEncryptedSeedValues() {
 
-        String plainEmail = "test.user@example.com";
-        String encryptedEmail = encryptor.encrypt(plainEmail);
-        System.out.println("encryptedEmail: " + encryptedEmail);
-        String hashedEmail = hashUtil.blindIndex(plainEmail);
-        System.out.println("hashedEmail: " + hashedEmail);
+        generateEmailAndPhone("SUPER_ADMIN", "super.admin@retailflow.com","(+91)9876543210");
+//        generateEmailAndPhone("ADMIN", "admin@retailflow.com","(+91)9876543211");
+//        generateEmailAndPhone("RETAIL_CUSTOMER", "retail.customer@retailflow.com","(+91)9876543212");
+//        generateEmailAndPhone("WHOLESALE_CUSTOMER", "wholsale.customer@retailflow.com","(+91)9876543213");
+//        generateEmailAndPhone("STORE_MANAGER", "storemaneger.customer@retailflow.com","(+91)9876543214");
 
-
-        String plainPhone = "(+91)9876543210";
-        String encryptedPhone = encryptor.encrypt(plainPhone);
-        System.out.println("encryptedPhone: " + encryptedPhone);
-        String hashedPhone = hashUtil.blindIndex(plainPhone);
-        System.out.println("hashedPhone: " + hashedPhone);
 
         // Copy-paste this output into your Liquibase YAML
     }
