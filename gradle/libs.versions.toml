@@ -9,6 +9,7 @@ postgresql = "42.7.10"
 mapstruct = "1.6.1"
 liquibase = "5.0.1"
 lombok-mapstruct-binding = "0.2.0"
+keycloak = "26.0.6"
 
 
 [plugins]
@@ -40,4 +41,6 @@ mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
 lombok-mapstruct-binding = {module = "org.projectlombok:lombok-mapstruct-binding", version.ref="lombok-mapstruct-binding" }
 
+# Auth (Keycloak)
+keycloak-admin-client = { module = "org.keycloak:keycloak-admin-client", version.ref="keycloak" }
 

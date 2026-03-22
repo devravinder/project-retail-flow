@@ -7,6 +7,13 @@ users-service:
       # bcrypt hashed password: $2a$10$tSepBpJKxkvJnkNR45miqO/c55NLFw49YWx9Z6jqZzHkxwbvkMI3i
   encryption-key: ${ENCRYPT_KEY:gd3jMu1Asdr/9mrQ+Pdvgo1K9tO10n7hu6StlRpDd94=} # base64 key
   hashSecret: ${HASH_SECRET:9s4gZDGFUESlt7+96NEyDasV22OQFSoD9H32f2bS7fo=} # base64 recommended
+  keycloak:
+    url: ${KEYCLOAK_URL:http://localhost:8080}
+    master-realm: master
+    admin-client-id: admin-cli
+    username: admin
+    password: Itest@ke2
+    realm : retail-flow
 
 spring:
 

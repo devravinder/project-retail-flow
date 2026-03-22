@@ -8,5 +8,6 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "users-service")
 public record ApplicationProperties(
         @NotNull String encryptionKey,
-        @NotNull String hashSecret
+        @NotNull String hashSecret,
+        @NotNull KeycloakConfig keycloak
 ) {}

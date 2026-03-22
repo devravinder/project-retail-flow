@@ -16,6 +16,9 @@ dependencies {
     runtimeOnly libs.postgresql
     implementation libs.liquibase
 
+    //auth (keycloak)
+    implementation libs.keycloak.admin.client
+
     // monitoring
     implementation libs.spring.boot.starter.actuator
 
