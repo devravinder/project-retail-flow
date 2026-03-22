@@ -14,9 +14,13 @@ import com.paravar.retailflow.util.HashingUtil;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +33,14 @@ import java.util.*;
 public class UserService {
     private final UserRepo userRepository;
     private final UserMapper userMapper;
-    private  final HashingUtil hashUtil;
+    private final HashingUtil hashUtil;
     private final RoleRepo roleRepo;
     private final Keycloak keycloakAdmin;
     private final ApplicationProperties properties;
     private final UserValidation validation;
 
-    public List<UserDto> getUsers(){
-        return  userMapper.toDtoList(userRepository.findAll());
+    public List<UserDto> getUsers() {
+        return userMapper.toDtoList(userRepository.findAll());
     }
 
     @Transactional
@@ -63,13 +67,14 @@ public class UserService {
 
     private String createKeycloakUser(UserCreateDto dto) {
 
+        RealmResource realm = keycloakAdmin.realm(properties.keycloak().realm());
+
         UserRepresentation userRep = new UserRepresentation();
         userRep.setUsername(dto.email());
         userRep.setEmail(dto.email());
         userRep.setFirstName(dto.firstName());
         userRep.setLastName(dto.lastName());
         userRep.setEnabled(true);
-        userRep.setRealmRoles(dto.roleNames().stream().toList()); // not working
 
         // Phone as Keycloak attribute (optional)
         Map<String, List<String>> attrs = new HashMap<>();
@@ -83,17 +88,29 @@ public class UserService {
         cred.setTemporary(false);
         userRep.setCredentials(Collections.singletonList(cred));
 
-        UsersResource usersResource = keycloakAdmin.realm(properties.keycloak().realm()).users();
+        UsersResource usersResource = realm.users();
 
         try (Response response = usersResource.create(userRep)) {
             if (response.getStatus() == 201) {
-                // Extract Keycloak user ID from Location header
-                String location = response.getLocation().toString();
-                return location.substring(location.lastIndexOf("/") + 1);
+                String userId = CreatedResponseUtil.getCreatedId(response);
+                setUserRoles(userId, realm, dto.roleNames());
+                return userId;
             } else {
                 throw AuthServerException.of(response.getStatus(), response.getEntity().toString());
             }
         }
+    }
+
+    private void setUserRoles(String userId, RealmResource realm, Set<String> roles) {
+
+        UserResource userResource = realm.users().get(userId);
+        if (roles != null && !roles.isEmpty()) {
+            List<RoleRepresentation> rolesMap = roles.stream()
+                    .map(name -> realm.roles().get(name).toRepresentation())
+                    .toList();
+            userResource.roles().realmLevel().add(rolesMap);
+        }
+
     }
 
     @Transactional(readOnly = true)
