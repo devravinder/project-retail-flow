@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -22,6 +25,11 @@ class UserController {
 
     private final UserService service;
 
+    @GetMapping("/me")
+    List<Object> me(@AuthenticationPrincipal Jwt jwt, Authentication auth){
+        return List.of(jwt, auth);
+    }
+
     @GetMapping()
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     List<UserDto> getUsers(){
@@ -30,6 +38,7 @@ class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN') or #id == authentication.name")
+    // token subject is authentication name & keycloak id is subject
     UserDto getUser(@PathVariable String id){
         return service.getUserById(id);
     }

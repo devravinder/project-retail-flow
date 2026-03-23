@@ -50,7 +50,9 @@
 
 - Get token
   ```bash
-     TOKENS=$(curl -X POST http://localhost:8080/realms/retail-flow/protocol/openid-connect/token -d grant_type=password -d client_id=frontend-app  -d username=super-admin  -d password=Itest@re2  -d scope=openid)
+     TOKENS=$(curl -X POST http://localhost:8080/realms/retail-flow/protocol/openid-connect/token \
+    -d grant_type=password -d client_id=frontend-app  \
+    -d username=super-admin  -d password=Itest@re2  -d scope=openid)
     
      ACCESS_TOKEN=$(echo $TOKENS | jq -r .access_token)
      REFRESH_TOKEN=$(echo $TOKENS | jq -r .refresh_token)
@@ -66,3 +68,22 @@
     curl -X GET http://localhost:8081/api/users -H "Authorization: Bearer $ACCESS_TOKEN"
   
   ```
+
+- To get the token form postman
+  - `new request > authorization`
+     - auth-type : O Auth 2.0
+     - Configure New Token
+       - Token Name : Give any name
+       - Grant type : Password Credentials
+       - Access Token URL : http://localhost:8080/realms/retail-flow/protocol/openid-connect/token
+       - Client ID : frontend-app
+       - Client Secret : <keep blank>
+       - Username : super-admin
+       - Password : Itest@re2
+       - Scope: openid
+       - Client Authentication : Send As Basic Auth Header
+     - Get New Access Token
+
+
+
+
