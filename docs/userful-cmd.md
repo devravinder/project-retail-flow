@@ -14,8 +14,8 @@
     docker compose -f infra.yaml up -d
   ```
 - ```bash
-    docker compose -f deployment/infra.yaml up -d
+    docker compose -f ../deployment/infra.yaml up -d
   ```
 - ```bash
-    docker compose -f deployment/infra.yaml down
+    docker compose -f ../deployment/infra.yaml down
   ```

@@ -8,6 +8,7 @@ import com.paravar.retailflow.users.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -22,16 +23,19 @@ class UserController {
     private final UserService service;
 
     @GetMapping()
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     List<UserDto> getUsers(){
         return service.getUsers();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN') or #id == authentication.name")
     UserDto getUser(@PathVariable String id){
         return service.getUserById(id);
     }
 
     @PostMapping()
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     UserDto createUser(@RequestBody UserCreateDto dto){
         return service.createUser(dto);
     }

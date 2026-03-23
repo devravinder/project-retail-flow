@@ -31,19 +31,6 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/retail-flow
           jwk-set-uri: http://localhost:8080/realms/retail-flow/protocol/openid-connect/certs
-      client:
-        registration:
-          keycloak:
-            client-id: frontend-app          # ← from your Keycloak client (public client!)
-            client-secret: ""                       # ← empty for public client (PKCE)
-            authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
-            scope: openid,profile,email,roles       # add 'roles' if you map realm/client roles
-
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8080/realms/retail-flow   # ← your realm!
-            user-name-attribute: preferred_username
 
 
   ############################### Database ############################
