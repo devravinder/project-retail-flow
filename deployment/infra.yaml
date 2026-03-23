@@ -69,6 +69,7 @@ services:
       # ── Metrics / Health (Prometheus-ready) ───────────────
       KC_METRICS_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"
+      KC_HTTP_MANAGEMENT_PORT: 9000
 
     volumes:
       # Realm JSON auto-imported on first boot

@@ -44,6 +44,7 @@ public class AddressEntity {
     private String country;
 
     @Column(name = "is_default")
+    @Builder.Default
     private Boolean isDefault = false;
 
     @Column(name = "phone", length = 20)
